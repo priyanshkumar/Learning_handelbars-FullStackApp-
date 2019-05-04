@@ -32,17 +32,18 @@ app.get("/", function(req, res) {
   });
 });
 
-app.post("/newWish", function(req, res) {
+app.post("/", function(req, res) {
   connection.query(
     "insert into wishes(wish) value(?)",
     [req.body.wish],
     function(err, result) {
       if (err) throw err;
 
-      res.send("Inserted Succesfully");
+      res.redirect("/");
     }
   );
 });
+
 app.listen(port, function() {
   console.log(`port running on ${port}`);
 });
