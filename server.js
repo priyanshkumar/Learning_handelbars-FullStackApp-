@@ -44,6 +44,28 @@ app.post("/", function(req, res) {
   );
 });
 
+app.put("/put", function(req, res) {
+  connection.query(
+    "update wishes set wish = ? where id = ?",
+    [req.body.wish, req.body.id],
+    function(err) {
+      if (err) throw err;
+
+      res.send("updated");
+    }
+  );
+});
+
+app.delete("/delete", function(req, res) {
+  connection.query("delete from wishes where id = ?", [req.body.id], function(
+    err
+  ) {
+    if (err) throw err;
+
+    res.send("deleted");
+  });
+});
+
 app.listen(port, function() {
   console.log(`port running on ${port}`);
 });
