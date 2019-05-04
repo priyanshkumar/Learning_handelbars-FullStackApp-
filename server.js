@@ -12,6 +12,10 @@ var connection = mysql.createConnection({
   password: "Priyansh0518"
 });
 
+connection.connect(function(err) {
+  if (err) throw err;
+});
+
 var app = express();
 
 app.use(express.json());
@@ -19,3 +23,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+app.get("/", function(req, res) {
+  connection.query("Select * from wishes", function(err, result) {
+    if (err) throw err;
+
+    res.render("list", { data: result });
+  });
+});
+
+app.listen(port, function() {
+  console.log(`port running on ${port}`);
+});
